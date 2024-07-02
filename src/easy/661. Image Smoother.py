@@ -11,8 +11,8 @@ class Solution(object):
             for c, col in enumerate(row):
                 s = 0
                 count = 0
-                for dx in range(-1,2):
-                    for dy in range(-1,2):
+                for dx in range(-1, 2):
+                    for dy in range(-1, 2):
                         if 0 <= r+dx < n and 0 <= c+dy < m:
                             s += img[r+dx][c+dy]
                             count += 1
