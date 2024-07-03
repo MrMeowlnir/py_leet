@@ -13,10 +13,10 @@ class Solution(object):
 
         nums.sort()
 
-        return min(max(nums[:-3])-min(nums[:-3]),
-                   max(nums[1:-2])-min(nums[1:-2]),
-                   max(nums[2:-1])-min(nums[2:-1]),
-                   max(nums[3:])-min(nums[3:]))
+        return min(nums[-4]-nums[0],
+                   nums[-3]-nums[1],
+                   nums[-2]-nums[2],
+                   nums[-1]-nums[3])
 
 
 if __name__ == "__main__":
