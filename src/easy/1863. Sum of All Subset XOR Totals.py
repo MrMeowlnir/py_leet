@@ -20,6 +20,19 @@ class Solution:
     def subsetXORSum(self, nums: list[int]) -> int:
         return sum(redc(lambda x, y: x ^ y, nums) for nums in subsets(nums))
 
+    def recursiveSubsetXORSum(self, nums: list[int]) -> int:
+        def dfs(i, total):
+            if i == len(nums):
+                return total
+            return dfs(i + 1, total ^ nums[i]) + dfs(i + 1, total)
+        return dfs(0, 0)
+
+    def bitwiseSubsetXORSum(self, nums: list[int]) -> int:
+        r = 0
+        for num in nums:
+            r |= num
+        return r << len(nums) - 1
+
 
 if __name__ == '__main__':
     solution = Solution()
@@ -28,4 +41,4 @@ if __name__ == '__main__':
              dict({'nums': [3, 4, 5, 6, 7, 8]}),
              ]
     for case in cases:
-        print(solution.subsetXORSum(**case))
+        print(solution.bitwiseSubsetXORSum(**case))
