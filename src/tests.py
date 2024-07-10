@@ -3,19 +3,19 @@ from src.bcolor import bcolors
 
 
 def counter_failer(func):
-    def wrapper(*args, **kwargs):
+    def wrapper(*args):
         wrapper.count += 1
         print(f'{bcolors.OKCYAN}Test #{wrapper.count}:{bcolors.ENDC}')
-        print(f'Case: {kwargs['data']}')
-        print(f'Expected: {kwargs['expected']}')
+        print(f'Case: {args[1]}')
+        print(f'Expected: {args[2]}')
         expected, actual_result = func(*args)
         print(f'Actual result: {actual_result}')
         if not expected:
             print(f'{bcolors.FAIL}Failed!{bcolors.ENDC}')
             wrapper.failed.append(
                 {'#': wrapper.count,
-                 'Case': kwargs['data'],
-                 'Expected result': kwargs['expected'],
+                 'Case': args[1],
+                 'Expected result': args[2],
                  'Actual result': actual_result})
         else:
             print(f'{bcolors.OKGREEN}Passed{bcolors.ENDC}')
