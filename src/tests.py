@@ -1,40 +1,35 @@
-from typing import Any, Callable
+from typing import Optional, Any, Callable
 from src.bcolor import bcolors
 
 
-def counter_failer(func):
+def counter(func):
     def wrapper(*args):
         wrapper.count += 1
         print(f'{bcolors.OKCYAN}Test #{wrapper.count}:{bcolors.ENDC}')
         print(f'Case: {args[1]}')
         print(f'Expected: {args[2]}')
-        expected, actual_result = func(*args)
-        print(f'Actual result: {actual_result}')
-        if not expected:
-            print(f'{bcolors.FAIL}Failed!{bcolors.ENDC}')
-            wrapper.failed.append(
-                {'#': wrapper.count,
-                 'Case': args[1],
-                 'Expected result': args[2],
-                 'Actual result': actual_result})
-        else:
-            print(f'{bcolors.OKGREEN}Passed{bcolors.ENDC}')
-        print('=' * 52)
+        return func(*args)
 
     wrapper.count = 0
-    wrapper.failed = []
     return wrapper
 
 
-@counter_failer
-def test_prints(func: Callable,
+@counter
+def print_tests(func: Callable,
                 data: dict,
-                expected: Any) -> (bool, Any):
+                expected: Any,
+                failed: Optional[list[dict]] = None) -> None:
+    if not failed:
+        failed = []
     actual_result = func(**data)
-    return actual_result == expected, actual_result
+    print(f'Actual result: {actual_result}')
+    if actual_result != expected:
+        print(f'{bcolors.FAIL}================= Failed! ================={bcolors.ENDC}')
+        failed.append(
+            {'Case': data,
+             'Expected result': expected,
+             'Actual result': actual_result})
+    else:
+        print(f'{bcolors.OKGREEN}================= Passed ================={bcolors.ENDC}')
 
 
-if test_prints.failed:
-    print(f'{bcolors.WARNING}Total failed {len(test_prints.failed)} cases{bcolors.ENDC}')
-for fail in test_prints.failed:
-    print(f'{fail}')
