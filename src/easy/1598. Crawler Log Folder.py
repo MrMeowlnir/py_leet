@@ -1,5 +1,5 @@
 from src.tests import *
-
+from src.bcolor import bcolors
 
 class Solution:
     def minOperations(self, logs: list[str]) -> int:
@@ -36,9 +36,13 @@ if __name__ == '__main__':
     ]
     failed = []
     for case in cases:
-        print_tests(func_test, case['data'], case['result'], failed)
+        fail = print_tests(func_test, case['data'], case['result'])
+        if fail:
+            failed.append(fail)
 
     if failed:
-        print(f'Total failed {len(failed)} of test cases')
-    for case in failed:
-        print(case)
+        print(f'{bcolors.WARNING}Total failed {len(failed)} of test cases{bcolors.ENDC}')
+    for fail in failed:
+        print(f'{fail["Case"]}: '
+              f'Expected: {bcolors.OKGREEN}{fail["Expected"]}{bcolors.ENDC}, '
+              f'Actual: {bcolors.FAIL}{fail["Actual"]}{bcolors.ENDC}')
