@@ -1,8 +1,8 @@
-from typing import Optional, Any
+from typing import Optional, Any, Callable
 from src.bcolor import bcolors
 
 
-def test_prints(func: classmethod,
+def test_prints(func: Callable,
                 data: dict,
                 expected: Any,
                 count: int = 0,
