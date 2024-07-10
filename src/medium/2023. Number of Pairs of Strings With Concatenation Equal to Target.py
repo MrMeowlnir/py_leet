@@ -1,5 +1,4 @@
 from src.tests import *
-from src.bcolor import bcolors
 
 
 class Solution:
@@ -15,7 +14,6 @@ class Solution:
 if __name__ == '__main__':
     solution = Solution()
     func_test = solution.numOfPairs
-    print(type(func_test))
     cases = [
         {'data':
             {
@@ -36,12 +34,7 @@ if __name__ == '__main__':
             },
             'result': 6}
     ]
-    case_count = 0
-    failed = []
+
     for case in cases:
-        case_count += 1
-        test_prints(func_test, case['data'], case['result'], case_count, failed)
-    if failed:
-        print(f'{bcolors.WARNING}Total failed {len(failed)} cases{bcolors.ENDC}')
-    for fail in failed:
-        print(f'{fail}')
+        test_prints(func_test, case['data'], case['result'])
+
